@@ -21,3 +21,10 @@ sudo ip link del veth20
 
 echo "Stoping the UDP tunnel"
 sudo pkill socat
+
+echo "Deleting the routing rules"
+sudo ip route del 172.16.0.0/16
+sudo ip route del 172.16.0.0/24
+sudo ip route del 172.16.0.0/24
+sudo ip route del 172.16.1.0/24
+
