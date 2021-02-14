@@ -60,6 +60,6 @@ sudo ip link set dev tun0 mtu 1492
 
 echo "Disables reverse path filtering"
 sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/all/rp_filter'
-sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/enp0s8/rp_filter'
+sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/eth0/rp_filter'
 sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/br0/rp_filter'
 sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/tun0/rp_filter'

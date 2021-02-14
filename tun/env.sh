@@ -1,4 +1,4 @@
-if [ $(hostname) == "Edge-Device-03-RT"]; then
+#if [ $(hostname) == "Edge-Device-03-RT"]; then
     CON1="conb1"
     CON2="conb2"
     NODE_IP="192.168.0.105"
@@ -11,17 +11,17 @@ if [ $(hostname) == "Edge-Device-03-RT"]; then
     TO_BRIDGE_IP="172.16.0.1"
     TO_IP1="172.16.0.2"
     TO_IP2="172.16.0.3"
-else
-    CON1="cona1"
-    CON2="cona2"
-    NODE_IP="192.168.0.103"
-    BRIDGE_IP="172.16.0.1"
-    IP1="172.16.0.2"
-    IP2="172.16.0.3"
-    TUNNEL_IP="172.16.0.100"
-    TO_NODE_IP="192.16.0.105"
-    TO_TUNNEL_IP="172.16.1.100"
-    TO_BRIDGE_IP="172.16.1.1"
-    TO_IP1="172.16.1.2"
-    TO_IP2="172.16.1.3"
-fi
+#else
+#    CON1="cona1"
+#    CON2="cona2"
+#    NODE_IP="192.168.0.103"
+#    BRIDGE_IP="172.16.0.1"
+#    IP1="172.16.0.2"
+#    IP2="172.16.0.3"
+#    TUNNEL_IP="172.16.0.100"
+#    TO_NODE_IP="192.16.0.105"
+#    TO_TUNNEL_IP="172.16.1.100"
+#    TO_BRIDGE_IP="172.16.1.1"
+#    TO_IP1="172.16.1.2"
+#    TO_IP2="172.16.1.3"
+#fi
