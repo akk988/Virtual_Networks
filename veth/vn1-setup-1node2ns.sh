@@ -43,6 +43,8 @@ echo "Setting the loopback interfaces in the network namespaces"
 sudo ip netns exec $CON1 ip link set lo up
 sudo ip netns exec $CON2 ip link set lo up
 
-echo "Setting the default route in the network namespaces"
+# The next three lines were commented because a default route was automaticlly added to the netns, 
+# in addition there was an error when adding a route rule via the ip of the bridge!
+#echo "Setting the default route in the network namespaces"
 #sudo ip netns exec $CON1 ip route add default via $BRIDGE_IP/24 dev veth11
 #sudo ip netns exec $CON2 ip route add default via $BRIDGE_IP/24 dev veth21
