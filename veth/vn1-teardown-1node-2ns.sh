@@ -14,5 +14,7 @@ fi
 
 echo "Deleting the bridge"
 sudo ip link delete br0
+
+echo "Deleting the veths"
 sudo ip link del veth10
 sudo ip link del veth20
