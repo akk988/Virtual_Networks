@@ -1,6 +1,6 @@
 #!/bin/bash -e 
 
-. env.sh
+. env103.sh
 
 echo "Creating the namespaces"
 sudo ip netns add $CON1
@@ -60,6 +60,6 @@ sudo ip link set dev tun0 mtu 1492
 
 echo "Disables reverse path filtering"
 sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/all/rp_filter'
-sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/eth0/rp_filter'
+sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/wlan0/rp_filter'
 sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/br0/rp_filter'
 sudo bash -c 'echo 0 > /proc/sys/net/ipv4/conf/tun0/rp_filter'
