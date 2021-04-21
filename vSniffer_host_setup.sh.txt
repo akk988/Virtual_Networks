@@ -1,0 +1,37 @@
+# Adding multiple NICs to Docker containers
+# From the host, where your containers / apps are running, do the following
+
+# get the PID of the container wich needs the new NIC
+docker inspect -f '{{.State.Pid}}' vSniffer-container-name
+docker inspect -f '{{.State.Pid}}' App-A-container-name
+
+# If the following path does not exist, create it: 
+# $ sudo mkdir -p /var/run/netns
+cd /var/run/netns/
+
+# Create the symlink using the PID of the container
+# I will call the netns: "netns-vSniffer"
+ln -sf /proc/2758/ns/net /var/run/netns/<YOUR Desired NETS NAME FOR this Specific Container>
+# I will call the netns: "netns-containerA"
+ln -sf /proc/2758/ns/net /var/run/netns/<YOUR Desired NETS NAME FOR this Specific Container>
+
+# show netns 
+ip netns list
+
+# create one veth peer for connecting two containers (vSniffer & containerx)
+ip link add veth1-vSniffer type veth peer name veth1-conta
+ifconfig veth1-vSniffer up
+ifconfig veth1-containerA up
+
+# Attach the veth peer to the namespaces
+ip link set veth1_vSniffer netns netns-vSniffer
+ip link set veth1_containerA netns netns-containerA
+
+# Giving ip addresses to the new NICs
+sudo ip netns exec netns-vSniffer ip addr add 172.17.0.110/24 dev veth1_vSniffer
+sudo ip netns exec netns-vSniffer ifconfig veth1_vSniffer up
+
+sudo ip netns exec netns-containerA ip addr add 172.17.0.111/24 dev veth1_containerA
+sudo ip netns exec netns-containerA ifconfig veth1_containerA up
+
+# ping and test it :)
