@@ -1,3 +1,4 @@
+## IN the HOST (VM), outside the containers: vSniffer, containerA, containerB, .. 
 root@DIA-linux-0004:~# docker run -it --name vSniffer --privileged gns3/ipterm /bin/bash
 
 root@DIA-linux-0004:~# docker start vSniffer
@@ -44,3 +45,15 @@ root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer ifconfig veth1_vSniffer
 root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer2 ifconfig veth1_vSniffer2 up
 root@DIA-linux-0004:~# sudo ip netns exec netns-containerA ifconfig veth1-conta up
 root@DIA-linux-0004:~# sudo ip netns exec netns-containerB ifconfig veth1-contb up
+
+## Inside the container vSniffer
+# create new bridge
+ ip link add name sniffer-brdg type bridge
+
+# link the NICs (of Channel A) to this bridge 
+ ip link set dev veth1_vSniffer master sniffer-brdg
+ ip link set dev veth1_vSniffer2 master sniffer-brdg
+ 
+ # Create second bridge and link the other NICs (channel B) to it
+
+
