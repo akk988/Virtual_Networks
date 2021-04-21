@@ -1,0 +1,40 @@
+root@DIA-linux-0004:~# docker run -it --name vSniffer --privileged gns3/ipterm /bin/bash
+
+root@DIA-linux-0004:~# docker start vSniffer
+vSniffer
+root@DIA-linux-0004:~# docker inspect -f '{{.State.Pid}}' vSniffer
+4304
+root@DIA-linux-0004:~# docker inspect -f '{{.State.Pid}}' containerA
+4078
+root@DIA-linux-0004:~# docker inspect -f '{{.State.Pid}}' containerB
+4193
+root@DIA-linux-0004:~# ln -sf /proc/4304/ns/net /var/run/netns/netns-vSniffer
+root@DIA-linux-0004:~# ln -sf /proc/4078/ns/net /var/run/netns/netns-containerA
+root@DIA-linux-0004:~# ln -sf /proc/4193/ns/net /var/run/netns/netns-containerB
+root@DIA-linux-0004:~# ip netns list
+netns-containerB (id: 5)
+netns-containerA (id: 4)
+netns-vSniffer (id: 6)
+
+root@DIA-linux-0004:~# ip link add veth1_vSniffer type veth peer name veth1-conta
+root@DIA-linux-0004:~# ip link add veth1_vSniffer2 type veth peer name veth1-contb
+
+root@DIA-linux-0004:~# ifconfig veth1_vSniffer up
+root@DIA-linux-0004:~# ifconfig veth1_vSniffer2 up
+root@DIA-linux-0004:~# ifconfig veth1-conta up
+root@DIA-linux-0004:~# ifconfig veth1-contb up
+
+root@DIA-linux-0004:~# ip link set veth1_vSniffer netns netns-vSniffer
+root@DIA-linux-0004:~# ip link set veth1_vSniffer2 netns netns-vSniffer2
+root@DIA-linux-0004:~# ip link set veth1-conta netns netns-containerA
+root@DIA-linux-0004:~# ip link set veth1-contb netns netns-containerB
+
+root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer ip addr add 172.17.0.110/24 dev veth1_vSniffer
+root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer2 ip addr add 172.17.0.120/24 dev veth1_vSniffer2
+root@DIA-linux-0004:~# sudo ip netns exec netns-containerA ip addr add 172.17.0.111/24 dev veth1-conta
+root@DIA-linux-0004:~# sudo ip netns exec netns-containerB ip addr add 172.17.0.121/24 dev veth1-contb
+
+root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer ifconfig veth1_vSniffer up
+root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer2 ifconfig veth1_vSniffer2 up
+root@DIA-linux-0004:~# sudo ip netns exec netns-containerA ifconfig veth1-conta up
+root@DIA-linux-0004:~# sudo ip netns exec netns-containerB ifconfig veth1-contb up
