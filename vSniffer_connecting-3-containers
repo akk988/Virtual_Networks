@@ -34,6 +34,12 @@ root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer2 ip addr add 172.17.0.1
 root@DIA-linux-0004:~# sudo ip netns exec netns-containerA ip addr add 172.17.0.111/24 dev veth1-conta
 root@DIA-linux-0004:~# sudo ip netns exec netns-containerB ip addr add 172.17.0.121/24 dev veth1-contb
 
+sudo ip netns exec netns-vSniffer ifconfig veth1_vSniffer down
+sudo ip netns exec netns-vSniffer2 ifconfig veth1_vSniffer2 down
+sudo ip netns exec netns-containerA ifconfig veth1-conta down
+sudo ip netns exec netns-containerB ifconfig veth1-contb down
+
+
 root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer ifconfig veth1_vSniffer up
 root@DIA-linux-0004:~# sudo ip netns exec netns-vSniffer2 ifconfig veth1_vSniffer2 up
 root@DIA-linux-0004:~# sudo ip netns exec netns-containerA ifconfig veth1-conta up
